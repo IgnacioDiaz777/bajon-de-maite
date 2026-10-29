@@ -1,0 +1,430 @@
+/* ==========================================================
+   ESTILOS BASE
+   Colores, tipografía y piezas que se repiten en toda la app.
+   ========================================================== */
+
+
+/* ---------- Variables de color ---------- */
+
+:root {
+  --amarillo: #FFCC00;
+  --amarillo-oscuro: #E6B800;
+  --amarillo-claro: #FFF3BF;
+  --amarillo-texto: #7A5B00;
+
+  --blanco: #FFFFFF;
+  --gris-fondo: #F4F4F2;
+  --gris-borde: #E6E6E3;
+  --gris-texto: #6B6B6B;
+  --gris-agotado: #ECECEA;
+
+  --verde-fondo: #E4F2E4;
+  --verde-texto: #2E7D32;
+
+  --rojo: #D93025;
+  --rojo-fondo: #FDECEA;
+
+  --texto: #141414;
+  --radio: 20px;
+  --radio-chico: 14px;
+  --ancho-app: 430px;
+}
+
+
+/* ---------- Reset ---------- */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  background: #E9E9E6;
+  color: var(--texto);
+  -webkit-font-smoothing: antialiased;
+}
+
+button,
+input,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
+}
+
+
+/* ---------- Contenedor principal ---------- */
+
+#app {
+  position: relative;
+  max-width: var(--ancho-app);
+  min-height: 100vh;
+  margin: 0 auto;
+  background: var(--blanco);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+.pantalla {
+  padding: 20px 20px 170px;
+}
+
+
+/* ---------- Cabecera de la app ---------- */
+
+.cabecera {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 22px;
+}
+
+.cabecera-marca {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.logo {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: var(--amarillo);
+}
+
+.avatar {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--gris-fondo);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+
+/* ---------- Títulos ---------- */
+
+.sobretitulo {
+  color: var(--amarillo-oscuro);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.titulo {
+  font-size: 34px;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.subtitulo {
+  margin-top: 6px;
+  color: var(--gris-texto);
+  font-size: 14px;
+}
+
+.seccion-titulo {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin: 28px 0 14px;
+}
+
+.seccion-titulo h2 {
+  font-size: 22px;
+  font-weight: 800;
+}
+
+.seccion-titulo a,
+.enlace-amarillo {
+  color: var(--amarillo-oscuro);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+
+/* ---------- Botones ---------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 52px;
+  padding: 0 22px;
+  border-radius: var(--radio);
+  font-size: 15px;
+  font-weight: 600;
+  transition: transform 0.1s, background 0.15s;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.btn-primario {
+  background: var(--amarillo);
+  color: var(--texto);
+}
+
+.btn-primario:hover:not(:disabled) {
+  background: var(--amarillo-oscuro);
+}
+
+.btn-secundario {
+  background: var(--gris-fondo);
+  color: var(--texto);
+}
+
+.btn-peligro {
+  background: var(--rojo-fondo);
+  color: var(--rojo);
+}
+
+.btn-bloque {
+  width: 100%;
+}
+
+.btn-redondo {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  background: var(--amarillo);
+}
+
+.icono-btn {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--gris-fondo);
+}
+
+.enlace {
+  color: var(--gris-texto);
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: underline;
+}
+
+
+/* ---------- Campos de formulario ---------- */
+
+.campo-grupo {
+  margin-bottom: 14px;
+}
+
+.campo-grupo label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.campo {
+  width: 100%;
+  height: 50px;
+  padding: 0 16px;
+  border: 1.5px solid transparent;
+  border-radius: var(--radio-chico);
+  background: var(--gris-fondo);
+  font-size: 15px;
+  outline: none;
+}
+
+.campo:focus {
+  border-color: var(--amarillo);
+  background: var(--blanco);
+}
+
+.campo.con-error {
+  border-color: var(--rojo);
+}
+
+.campo-error {
+  min-height: 16px;
+  margin-top: 4px;
+  color: var(--rojo);
+  font-size: 12px;
+}
+
+.alerta-error {
+  margin-bottom: 12px;
+  padding: 12px 14px;
+  border-radius: var(--radio-chico);
+  background: var(--rojo-fondo);
+  color: var(--rojo);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+
+/* ---------- Chips (filtros) ---------- */
+
+.chips {
+  display: flex;
+  gap: 8px;
+  margin: 14px 0;
+}
+
+.chip {
+  padding: 9px 16px;
+  border: 1px solid var(--gris-borde);
+  border-radius: 999px;
+  background: var(--blanco);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.chip.activo {
+  border-color: var(--amarillo);
+  background: var(--amarillo);
+  font-weight: 700;
+}
+
+
+/* ---------- Insignias de stock ---------- */
+
+.insignia {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.insignia::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.insignia-disponible { background: var(--verde-fondo); color: var(--verde-texto); }
+.insignia-poco       { background: var(--amarillo-claro); color: var(--amarillo-texto); }
+.insignia-agotado    { background: var(--gris-agotado); color: var(--gris-texto); }
+
+
+/* ---------- Imagen de producto ---------- */
+
+.img-prod {
+  position: relative;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 70px;
+  height: 80px;
+  border-radius: var(--radio-chico);
+  overflow: hidden;
+  font-size: 32px;
+}
+
+.img-prod img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.img-prod.mini   { width: 44px; height: 44px; border-radius: 10px; font-size: 22px; }
+.img-prod.ancho  { width: 100%; height: 150px; border-radius: var(--radio); font-size: 64px; }
+.img-prod.grande { width: 100%; height: 220px; border-radius: 24px; font-size: 88px; }
+
+
+/* ---------- Control de cantidad ---------- */
+
+.cantidad {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 4px;
+  border: 1px solid var(--gris-borde);
+  border-radius: 999px;
+  background: var(--blanco);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.cantidad button {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+}
+
+.cantidad button:disabled {
+  opacity: 0.3;
+}
+
+
+/* ---------- Mensajes flotantes ---------- */
+
+#toasts {
+  position: fixed;
+  top: 14px;
+  left: 50%;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: min(92%, 400px);
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.toast {
+  padding: 13px 16px;
+  border-radius: var(--radio-chico);
+  background: var(--texto);
+  color: var(--blanco);
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  animation: entrar 0.25s;
+}
+
+.toast-error { background: var(--rojo); }
+
+@keyframes entrar {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: none; }
+}

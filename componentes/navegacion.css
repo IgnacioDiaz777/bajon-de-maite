@@ -1,0 +1,60 @@
+/* ==========================================================
+   ESTILOS DE LA NAVEGACIÓN INFERIOR
+   ========================================================== */
+
+.nav {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  z-index: 20;
+  display: flex;
+  justify-content: space-around;
+  width: min(100%, var(--ancho-app));
+  padding: 10px 8px 18px;
+  border-top: 1px solid var(--gris-borde);
+  background: var(--blanco);
+  transform: translateX(-50%);
+}
+
+.nav-item {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  color: var(--gris-texto);
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.nav-item.activo {
+  color: var(--amarillo-oscuro);
+  font-weight: 700;
+}
+
+.nav-icono {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 30px;
+  border-radius: 999px;
+}
+
+.nav-item.activo .nav-icono {
+  background: var(--amarillo-claro);
+}
+
+.nav-insignia {
+  position: absolute;
+  top: -4px;
+  right: 4px;
+  min-width: 18px;
+  padding: 1px 5px;
+  border-radius: 999px;
+  background: var(--rojo);
+  color: var(--blanco);
+  font-size: 10px;
+  font-weight: 700;
+  text-align: center;
+}

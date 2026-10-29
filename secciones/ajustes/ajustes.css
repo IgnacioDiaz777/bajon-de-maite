@@ -1,0 +1,44 @@
+/* ==========================================================
+   ESTILOS: AJUSTES
+   ========================================================== */
+
+.ajuste-tarjeta {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 18px;
+  padding: 16px;
+  border-radius: var(--radio);
+  background: var(--gris-fondo);
+}
+
+.ajuste-tarjeta strong {
+  display: block;
+  font-size: 15px;
+}
+
+.ajuste-tarjeta p,
+.ajuste-tarjeta small {
+  color: var(--gris-texto);
+  font-size: 12px;
+}
+
+.ajuste-columna {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.avatar-grande {
+  width: 52px;
+  height: 52px;
+  background: var(--amarillo);
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.ajuste-acciones {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 28px;
+}

@@ -1,0 +1,216 @@
+/* ==========================================================
+   ESTILOS: PEDIDOS
+   ========================================================== */
+
+.tarjeta-pedido {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 20px;
+  padding: 16px;
+  border-radius: 24px;
+  background: var(--gris-fondo);
+}
+
+.fila-entre {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.tarjeta-pedido h2 {
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.etiqueta-borrador {
+  color: var(--gris-texto);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.fila-campos {
+  display: flex;
+  gap: 10px;
+}
+
+.campo-blanco {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  height: 44px;
+  padding: 0 12px;
+  border-radius: 12px;
+  background: var(--blanco);
+  color: var(--gris-texto);
+}
+
+.campo-blanco input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  background: transparent;
+  font-size: 13px;
+  outline: none;
+}
+
+.selector {
+  height: 44px;
+  padding: 0 10px;
+  border: none;
+  border-radius: 12px;
+  background: var(--blanco);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.items-pedido {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.item-pedido,
+.selector-fila {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.item-info {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+  font-size: 14px;
+}
+
+.item-info small {
+  color: var(--gris-texto);
+  font-size: 11px;
+}
+
+.items-vacio {
+  padding: 8px 0;
+  color: var(--gris-texto);
+  font-size: 13px;
+  text-align: center;
+}
+
+.tarjeta-pedido .enlace-amarillo {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.totales {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding-top: 12px;
+  border-top: 1px solid var(--gris-borde);
+}
+
+.totales small {
+  display: block;
+  color: var(--gris-texto);
+  font-size: 11px;
+}
+
+.totales strong {
+  font-size: 15px;
+}
+
+.total-derecha {
+  text-align: right;
+}
+
+.total-grande {
+  font-size: 28px !important;
+  font-weight: 800;
+}
+
+.resumen-cocina {
+  color: var(--amarillo-oscuro);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.lista-cocina {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.pedido-cocina {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px 16px;
+  border: 1px solid var(--gris-borde);
+  border-radius: var(--radio);
+}
+
+.pedido-numero {
+  margin-right: 6px;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.pedido-destino,
+.pedido-hace,
+.pedido-nota {
+  color: var(--gris-texto);
+  font-size: 12px;
+}
+
+.pedido-items {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.estado {
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.estado-preparacion { background: var(--amarillo-claro); color: var(--amarillo-texto); }
+.estado-listo       { background: var(--verde-fondo); color: var(--verde-texto); }
+
+.btn-avanzar {
+  align-self: flex-start;
+  margin-top: 4px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: var(--gris-fondo);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.selector-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.selector-cuenta {
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: var(--amarillo-claro);
+  color: var(--amarillo-texto);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.btn-redondo:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}

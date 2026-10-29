@@ -1,0 +1,86 @@
+{
+  "la doble maite": {
+    "emoji": "🥧",
+    "color": "#F6E3B4",
+    "imagen": "assets/img/doble_maite.png",
+    "resumen": "pastel de choclo + ensalada de tomate",
+    "tiempo": "15–20 min",
+    "rating": 4.9,
+    "resenas": 128,
+    "etiqueta": "LA FAVORITA DE LA CASA",
+    "permiteCombo": true,
+    "precioCombo": 2000
+  },
+  "papas con todo": {
+    "emoji": "🍟",
+    "color": "#FBE7C6",
+    "imagen": "assets/img/papas_con_todo.png",
+    "resumen": "Cheddar + tocino crujiente",
+    "tiempo": "10–15 min",
+    "rating": 4.7,
+    "resenas": 96,
+    "etiqueta": "",
+    "permiteCombo": false,
+    "precioCombo": 0
+  },
+  "combo sin culpa": {
+    "emoji": "🍔",
+    "color": "#F3D9B1",
+    "imagen": "assets/img/combo_sin_culpa.png",
+    "resumen": "Doble Maite + papas + bebida",
+    "tiempo": "15–20 min",
+    "rating": 4.8,
+    "resenas": 74,
+    "etiqueta": "PROMO DEL DÍA",
+    "permiteCombo": false,
+    "precioCombo": 0
+  },
+  "alitas picantes": {
+    "emoji": "🍗",
+    "color": "#F2C9A8",
+    "imagen": "assets/img/alitas_picantes.png",
+    "resumen": "Con salsa picante de la casa",
+    "tiempo": "15–20 min",
+    "rating": 4.6,
+    "resenas": 51,
+    "etiqueta": "",
+    "permiteCombo": true,
+    "precioCombo": 2000
+  },
+  "bebidas": {
+    "emoji": "🥤",
+    "color": "#D8ECF7",
+    "imagen": "assets/img/bebida.png",
+    "resumen": "Bebida de 350 ml",
+    "tiempo": "1–2 min",
+    "rating": 0,
+    "resenas": 0,
+    "etiqueta": "",
+    "permiteCombo": false,
+    "precioCombo": 0
+  },
+  "papas fritas (medianas)": {
+    "emoji": "🍟",
+    "color": "#FFE9A8",
+    "imagen": "assets/img/papas_fritas_(medianas).png",
+    "resumen": "Porción mediana",
+    "tiempo": "5–10 min",
+    "rating": 0,
+    "resenas": 0,
+    "etiqueta": "",
+    "permiteCombo": false,
+    "precioCombo": 0
+  },
+  "nuggets de pollo": {
+    "emoji": "🍗",
+    "color": "#F7DDB8",
+    "imagen": "assets/img/nuggets_de_pollo.png",
+    "resumen": "8 unidades",
+    "tiempo": "10 min",
+    "rating": 0,
+    "resenas": 0,
+    "etiqueta": "",
+    "permiteCombo": false,
+    "precioCombo": 0
+  }
+}

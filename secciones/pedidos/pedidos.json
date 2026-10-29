@@ -1,0 +1,27 @@
+[
+  {
+    "numero": 24,
+    "cliente": "Joaquín",
+    "destino": "Mesa 03",
+    "estado": "En preparación",
+    "hace_min": 4,
+    "items": [
+      { "nombre": "Doble Maite", "cantidad": 2 },
+      { "nombre": "Papas con todo", "cantidad": 1 }
+    ],
+    "nota": "pan fresco y crujiente de acompañamiento.",
+    "total": 17970
+  },
+  {
+    "numero": 23,
+    "cliente": "Valentina",
+    "destino": "Para llevar",
+    "estado": "Listo para retirar",
+    "hace_min": 8,
+    "items": [
+      { "nombre": "Combo sin culpa", "cantidad": 2 }
+    ],
+    "nota": "",
+    "total": 17980
+  }
+]

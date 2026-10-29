@@ -1,0 +1,128 @@
+/* ==========================================================
+   ESTILOS: PRODUCTOS
+   ========================================================== */
+
+.buscador {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 18px;
+  padding: 0 14px;
+  height: 50px;
+  border-radius: var(--radio-chico);
+  background: var(--gris-fondo);
+}
+
+.buscador-icono {
+  display: grid;
+  color: var(--gris-texto);
+}
+
+.buscador input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  background: transparent;
+  font-size: 15px;
+  outline: none;
+}
+
+.buscador button {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+}
+
+.lista-cabecera {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+  color: var(--gris-texto);
+  font-size: 12px;
+}
+
+.lista-cabecera button {
+  color: var(--gris-texto);
+  font-size: 12px;
+}
+
+.fila-producto {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--gris-borde);
+}
+
+.fila-info {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  min-width: 0;
+}
+
+.fila-info h3 {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.fila-info p {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.btn-editar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 6px;
+  color: var(--gris-texto);
+  font-size: 11px;
+}
+
+.extras-titulo {
+  margin: 22px 0 4px;
+}
+
+.extras-titulo h2 {
+  font-size: 30px;
+  font-weight: 800;
+}
+
+.extras-titulo p {
+  color: var(--gris-texto);
+  font-size: 13px;
+}
+
+.vacio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 40px 0;
+  color: var(--gris-texto);
+  font-size: 14px;
+  text-align: center;
+}
+
+.barra-accion {
+  position: fixed;
+  bottom: 78px;
+  left: 50%;
+  z-index: 10;
+  width: min(100%, var(--ancho-app));
+  padding: 14px 20px;
+  background: linear-gradient(to top, var(--blanco) 70%, rgba(255, 255, 255, 0));
+  transform: translateX(-50%);
+}
+
+.formulario-doble {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
