@@ -17,6 +17,8 @@ oracledb.outFormat = oracledb.OUT_FORMAT_OBJECT; // filas como objetos: { ID_PRO
 
 const IDENTIFICADOR_SQL = /^[A-Za-z][A-Za-z0-9_$#]{0,29}$/;
 
+oracledb.initOracleClient({ libDir: 'C:\\Users\\gabri\\Desktop\\bajon-de-maite\\backend\\instantclient_23_26' });
+
 let pool = null;
 
 

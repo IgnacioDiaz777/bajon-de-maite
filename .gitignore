@@ -8,3 +8,6 @@ Wallet_*/
 *.sso
 ewallet.*
 cwallet.*
+backend/wallet/
+backend/instantclient_23_26/
+backend/wallet/
