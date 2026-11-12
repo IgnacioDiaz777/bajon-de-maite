@@ -8,6 +8,7 @@ import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 
 process.env.JWT_SECRET = 'clave-solo-para-pruebas-0123456789-abcdefghij';
+process.env.LOG_ARCHIVO = '0';   // las pruebas no escriben archivos de log
 
 const { crearApp } = await import('../app.js');
 const { crearDbFalsa } = await import('./dbFalsa.js');

@@ -1,0 +1,215 @@
+/* ==========================================================
+   ESTILOS: ADMINISTRACIÓN (Sprint 4)
+   ========================================================== */
+
+.enlace-atras {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 14px;
+  color: var(--gris-texto);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.admin-pestanas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 16px 0;
+}
+
+.admin-vacio {
+  padding: 28px 0;
+  color: var(--gris-texto);
+  font-size: 14px;
+  text-align: center;
+}
+
+.admin-nota {
+  margin-top: 10px;
+  color: var(--gris-texto);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.admin-nota code,
+.campo-ayuda {
+  font-size: 12px;
+}
+
+.admin-nota code {
+  padding: 1px 5px;
+  border-radius: 6px;
+  background: var(--gris-fondo);
+}
+
+.campo-ayuda {
+  display: block;
+  margin-top: 4px;
+  color: var(--gris-texto);
+}
+
+.campo-area {
+  height: 110px;
+  padding: 12px 16px;
+  line-height: 1.4;
+  resize: vertical;
+}
+
+.admin-acciones {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+
+/* ---------- Rendimiento ---------- */
+
+.admin-datos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.admin-dato {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 14px;
+  border-radius: var(--radio-chico);
+  background: var(--gris-fondo);
+}
+
+.admin-dato small,
+.admin-dato span {
+  color: var(--gris-texto);
+  font-size: 11px;
+}
+
+.admin-dato strong {
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.admin-dato.malo { background: var(--rojo-fondo); }
+.admin-dato.malo strong { color: var(--rojo); }
+.admin-dato.aviso { background: var(--amarillo-claro); }
+
+.admin-tabla-caja {
+  overflow-x: auto;
+  border: 1px solid var(--gris-borde);
+  border-radius: var(--radio-chico);
+}
+
+.admin-tabla {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.admin-tabla th,
+.admin-tabla td {
+  padding: 9px 10px;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.admin-tabla th:first-child,
+.admin-tabla td:first-child {
+  text-align: left;
+}
+
+.admin-tabla thead {
+  background: var(--gris-fondo);
+}
+
+.admin-tabla tbody tr + tr td {
+  border-top: 1px solid var(--gris-borde);
+}
+
+.admin-tabla .fila-aviso {
+  background: var(--amarillo-claro);
+}
+
+
+/* ---------- Listas (auditoría, reportes, respaldos) ---------- */
+
+.admin-filtros {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.admin-filtros .btn {
+  grid-column: 1 / -1;
+  height: 44px;
+}
+
+.admin-filtros .campo {
+  height: 44px;
+}
+
+.admin-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.admin-item {
+  padding: 14px;
+  border-radius: var(--radio-chico);
+  background: var(--gris-fondo);
+}
+
+.admin-item-cab {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.admin-item strong {
+  font-size: 14px;
+  word-break: break-word;
+}
+
+.admin-item p {
+  margin-top: 4px;
+  color: var(--gris-texto);
+  font-size: 12px;
+  word-break: break-word;
+}
+
+.admin-item .admin-detalle {
+  color: var(--texto);
+  font-size: 13px;
+}
+
+.admin-estado {
+  height: 42px;
+  margin-top: 10px;
+  background: var(--blanco);
+  font-size: 13px;
+}
+
+.admin-restaurar {
+  height: 42px;
+  margin-top: 10px;
+  font-size: 13px;
+}
+
+.admin-etiqueta {
+  flex-shrink: 0;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.etiqueta-buena  { background: var(--verde-fondo); color: var(--verde-texto); }
+.etiqueta-mala   { background: var(--rojo-fondo); color: var(--rojo); }
+.etiqueta-aviso  { background: var(--amarillo-claro); color: var(--amarillo-texto); }
+.etiqueta-neutra { background: var(--gris-agotado); color: var(--gris-texto); }

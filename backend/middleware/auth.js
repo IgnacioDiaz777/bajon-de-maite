@@ -4,6 +4,7 @@
 
 import jwt from 'jsonwebtoken';
 import { config } from '../config/env.js';
+import { logger } from '../services/logger.js';
 
 
 export function autenticar(req, res, next) {
@@ -19,6 +20,7 @@ export function autenticar(req, res, next) {
 
 export const exigirRol = (...rolesPermitidos) => (req, res, next) => {
   if (!rolesPermitidos.includes(req.usuario.rol)) {
+    logger.warn('acceso_denegado', { usuario: req.usuario.usuario, rol: req.usuario.rol, ruta: `${req.method} ${req.originalUrl}` });
     return res.status(403).json({ status: 'error', errors: ['No tienes permisos para realizar esta acción.'] });
   }
 

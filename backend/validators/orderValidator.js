@@ -13,11 +13,26 @@ const orderSchema = Joi.object({
     }),
 
   tipoEntrega: Joi.string()
-    .valid('Para llevar', 'Mesa 01', 'Mesa 02', 'Mesa 03', 'Mesa 04', 'Mesa 05') // Mismas opciones que el selector de la app
+    .valid('Para llevar', 'Mesa 01', 'Mesa 02', 'Mesa 03', 'Mesa 04', 'Mesa 05', 'Despacho') // Mismas opciones que el selector de la app
     .required()
     .messages({
       'any.only': 'El tipo de entrega seleccionado no es válido.'
     }),
+
+  // Cliente registrado (tarea #33). Si no viene, el cliente se busca o crea por su nombre, como siempre.
+  // Un despacho lo exige: de ese cliente sale la dirección.
+  idCliente: Joi.number().integer().positive().when('tipoEntrega', { is: 'Despacho', then: Joi.required() })
+    .messages({ 'any.required': 'Para un despacho elige un cliente registrado con dirección.' }),
+
+  // Obligatorias para el despacho: a qué dirección del cliente se envía
+  idDireccion: Joi.number().integer().positive().when('tipoEntrega', {
+    is: 'Despacho',
+    then: Joi.required(),
+    otherwise: Joi.forbidden()
+  }).messages({
+    'any.required': 'Elige la dirección de despacho del cliente.',
+    'any.unknown': 'La dirección solo se usa en los pedidos con despacho.'
+  }),
 
   notaCocinero: Joi.string()
     .trim()

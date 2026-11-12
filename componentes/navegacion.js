@@ -26,7 +26,17 @@ export function renderNavegacion(rutaActiva) {
 
   setTimeout(actualizarInsigniaPedidos, 0);
 
-  return `<nav class="nav">${enlaces}</nav>`;
+  // "Avisos" no es una pantalla: abre la lista de notificaciones (la conexión la maneja app.js)
+  const avisos = `
+    <button class="nav-item nav-boton" id="nav-avisos" type="button" aria-label="Avisos">
+      <span class="nav-icono">
+        ${icono('campana', 22)}
+        <span class="nav-insignia" id="insignia-avisos" hidden></span>
+      </span>
+      <span>Avisos</span>
+    </button>`;
+
+  return `<nav class="nav">${enlaces}${avisos}</nav>`;
 }
 
 

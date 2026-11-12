@@ -23,7 +23,11 @@ const PERMISOS = {
   gestionarProductos: ['administrador'],
   crearPedido: ['administrador', 'cajero'],
   marcarListo: ['administrador', 'cocinero'],
-  marcarEntregado: ['administrador', 'cajero']
+  marcarEntregado: ['administrador', 'cajero'],
+  verAdmin: ['administrador'],           // Sprint 4: pantalla de Administración
+  verClientes: ['administrador', 'cajero'],   // tarea 33: clientes y direcciones
+  eliminarClientes: ['administrador'],
+  cobrar: ['administrador', 'cajero']         // tarea 32: cobrar pedidos
 };
 
 
@@ -34,13 +38,16 @@ export const estado = {
   cargado: false,
   productos: [],
   pedidos: [],
+  pagos: {},                 // idPedido → { estado, metodo, monto } (solo para quien puede cobrar)
+  pagosDisponibles: true,    // false si todavía no se crearon las tablas de pagos
   catalogo: {},
   inicio: {},
   borrador: nuevoBorrador()
 };
 
 function nuevoBorrador() {
-  return { cliente: '', tipo: 'Para llevar', nota: '', items: [] };
+  // idCliente / idDireccion / direcciones: solo cuando se elige un cliente registrado (tarea 33)
+  return { cliente: '', tipo: 'Para llevar', nota: '', items: [], idCliente: null, idDireccion: null, direcciones: [] };
 }
 
 export function puede(accion) {
@@ -72,6 +79,16 @@ export async function iniciarSesion(usuario, password) {
   try {
     sessionStorage.setItem(CLAVE_SESION, JSON.stringify({ usuario: respuesta.usuario, token: respuesta.token }));
   } catch { /* sin almacenamiento: la sesión dura solo mientras la página siga abierta */ }
+}
+
+// Después de cambiar el nombre en "Mi perfil": se guarda el usuario y el token nuevos
+export function actualizarSesion(usuario, token) {
+  estado.usuario = usuario;
+  fijarToken(token);
+
+  try {
+    sessionStorage.setItem(CLAVE_SESION, JSON.stringify({ usuario, token }));
+  } catch { /* sin almacenamiento */ }
 }
 
 export function cerrarSesion() {
@@ -118,6 +135,24 @@ export async function recargarProductos() {
 export async function recargarPedidos() {
   const respuesta = await api('/api/pedidos');
   estado.pedidos = respuesta.data.map((p) => ({ ...p, creado: new Date(p.fecha).getTime() }));
+
+  await recargarPagos();
+}
+
+// Estado de pago de los pedidos en cocina. Si falla (ej. faltan las tablas), la pantalla sigue sin los datos de pago.
+export async function recargarPagos() {
+  estado.pagos = {};
+  estado.pagosDisponibles = puede('cobrar');
+
+  if (!puede('cobrar') || !estado.pedidos.length) return;
+
+  try {
+    const ids = estado.pedidos.slice(0, 100).map((p) => p.numero).join(',');
+    const respuesta = await api(`/api/pagos?pedidos=${ids}`);
+    estado.pagos = Object.fromEntries(respuesta.data.map((p) => [p.idPedido, p]));
+  } catch {
+    estado.pagosDisponibles = false;
+  }
 }
 
 export async function cargarDatos() {
@@ -205,15 +240,19 @@ export function totalBorrador() {
 /* ---------- Envío a cocina (Oracle: SP_CREAR_PEDIDO) ---------- */
 
 export async function enviarPedido() {
-  const { cliente, tipo, nota, items } = estado.borrador;
+  const { cliente, tipo, nota, items, idCliente, idDireccion } = estado.borrador;
 
   if (!cliente.trim()) return { ok: false, campo: 'cliente', error: 'Ingresa el nombre del cliente.' };
+  if (tipo === 'Despacho' && !idCliente) return { ok: false, campo: 'cliente', error: 'Para un despacho elige un cliente registrado.' };
+  if (tipo === 'Despacho' && !idDireccion) return { ok: false, campo: 'pedido', error: 'Elige la dirección de despacho (o agrégala en la ficha del cliente).' };
   if (items.length === 0) return { ok: false, campo: 'pedido', error: 'Agrega al menos un producto al pedido.' };
 
   const cuerpo = {
     nombreCliente: cliente.trim(),
     tipoEntrega: tipo,
     notaCocinero: nota.trim(),
+    ...(idCliente ? { idCliente } : {}),
+    ...(tipo === 'Despacho' ? { idDireccion } : {}),
     productos: items.map((i) => ({ productoId: i.idProducto, cantidad: i.cantidad, combo: i.combo }))
   };
 

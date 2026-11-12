@@ -5,9 +5,13 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "test": "node --test tests/api.test.js",
+    "test": "node --test tests/api.test.js tests/sprint4.test.js tests/tareas31a34.test.js",
     "probar-conexion": "node scripts/probarConexion.js",
-    "crear-usuario": "node scripts/crearUsuario.js"
+    "crear-usuario": "node scripts/crearUsuario.js",
+    "crear-tablas": "node scripts/crearTablas.js",
+    "respaldo": "node scripts/respaldar.js",
+    "restaurar": "node scripts/restaurar.js",
+    "prueba-carga": "node scripts/pruebaCarga.js"
   },
   "keywords": [],
   "author": "",

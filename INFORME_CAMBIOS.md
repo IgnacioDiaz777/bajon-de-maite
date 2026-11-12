@@ -77,3 +77,42 @@ No se modificó el script SQL. Donde la app pedía algo que la base no tiene, se
 - No hay límite de intentos de login.
 - Imágenes, emoji y rating dependen del nombre exacto del producto en `catalogo-visual.json`; un producto nuevo usa un emoji por categoría.
 - Las pruebas contra Oracle real (por ejemplo con una base de pruebas) quedan pendientes.
+
+## 3. Sprint 4 (tareas 27 a 30)
+
+**Archivos nuevos** (backend): `services/` (`logger`, `auditService`, `feedbackService`, `monitorService`, `backupService`),
+`middleware/` (`auditoria`, `rendimiento`), `routes/` (`auditoria`, `feedback`, `monitoreo`, `respaldos`), `validators/` (`auditoria`, `feedback`, `respaldo`),
+`scripts/` (`crearTablas`, `respaldar`, `restaurar`, `pruebaCarga`), `sql/sprint4_tablas.sql`, `tests/sprint4.test.js`.
+**Frontend nuevo:** `secciones/admin/` (pantalla de Administración) y `componentes/feedback.js`.
+
+**Archivos que se modificaron:** `app.js` y `server.js` (rutas nuevas, respaldo automático, manejo de errores no capturados), `config/env.js` (variables nuevas),
+`db/oracle.js` (una línea: tipo `texto` para leer CLOB), `middleware/auth.js` y `middleware/errores.js` (logs), las rutas `auth`, `productos`, `pedidos` y `usuarios`
+(solo se agregó el middleware `auditar`), `validators/validar.js` (`validarConsulta`), `tests/dbFalsa.js` (tablas nuevas y rollback),
+`nucleo/app.js`, `nucleo/estado.js`, `secciones/ajustes/ajustes.js`, `index.html`, `.gitignore`, `.env.example`, `package.json`, `README.md`.
+
+**Base de datos:** 2 tablas nuevas (`AUDITORIA`, `FEEDBACK`) sin claves foráneas, a propósito: el historial debe sobrevivir aunque cambien usuarios o productos.
+No se modificó ninguna tabla existente. Si falta crearlas, la API responde 503 con la instrucción `npm run crear-tablas` y el resto de la app sigue funcionando
+(la auditoría nunca bloquea una operación).
+
+**Qué NO está verificado:** las pruebas automáticas (47) usan la base falsa y comprueban la lógica, no el SQL contra Oracle real. Falta probar con tu Oracle:
+`npm run crear-tablas`, `npm run respaldo` y una restauración de prueba. El SQL de la restauración (ajuste de columnas *identity*) depende de la versión de Oracle (12.2 o superior).
+
+## 4. Tareas 31 a 34
+
+**Backend nuevo:** `services/` (`eventosService`, `alertasService`, `clienteService`, `perfilService`, `limitador`, `pagoService`, `analiticaService`, `pagos/proveedorTransbank`, `pagos/proveedorSimulado`, `pagos/index`),
+`routes/` (`notificaciones`, `clientes`, `perfil`, `pagos`, `analitica`), `validators/` (`cliente`, `perfil`, `pago`, `analitica`), `sql/tareas_31_34_tablas.sql`, `tests/tareas31a34.test.js`.
+**Frontend nuevo:** `secciones/clientes/`, `componentes/notificaciones.js`, `componentes/cobro.js`, `componentes/perfil.js`.
+
+**Archivos que se modificaron:** `app.js`, `server.js`, `config/env.js` (pagos), `routes/pedidos.js` y `routes/feedback.js` (avisos), `services/orderService.js` y `validators/orderValidator.js`
+(cliente registrado y tipo de entrega *Despacho*), `services/backupService.js` (tablas nuevas y vaciado de las que el respaldo no tenía), `middleware/rendimiento.js`,
+`scripts/crearTablas.js` y `scripts/probarConexion.js`, `tests/dbFalsa.js`, `.env.example`, `README.md`, y en el frontend `nucleo/` (`app`, `api`, `estado`, `utilidades`),
+`componentes/navegacion.js`, `secciones/pedidos`, `secciones/ajustes`, `secciones/admin`, `index.html`.
+
+**Base de datos:** 3 tablas nuevas (`CLIENTE_PERFIL`, `DIRECCION_DESPACHO`, `PAGO`) con claves foráneas a `CLIENTE` y `PEDIDO`, y un índice único que impide dos pagos autorizados del mismo pedido.
+No se modificó ninguna tabla existente. El destino de despacho se guarda en `PEDIDO.OBSERVACIONES` (como ya se hacía con la mesa), limitado a 250 caracteres en total.
+
+**Qué NO está verificado:** las pruebas automáticas (78 en total) usan la base falsa y un proveedor de pagos falso: comprueban la lógica, no el SQL contra Oracle real ni la comunicación con Webpay.
+Falta probar con tu Oracle (`npm run crear-tablas`; el SQL usa `MERGE`, `NUMTODSINTERVAL` y un índice único basado en `CASE`) y con Webpay de integración.
+El frontend se revisó solo a nivel de código (no se abrió en un navegador): conviene probar las pantallas nuevas en el celular, en especial el flujo de pago con la pestaña de Webpay.
+Las notificaciones funcionan con la app abierta (no son "push" con la app cerrada, que exigiría HTTPS y un service worker).
+

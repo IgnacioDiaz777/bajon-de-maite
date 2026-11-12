@@ -38,6 +38,9 @@ export async function iniciarPool() {
     poolMin: 1,
     poolMax: 5,
     poolIncrement: 1,
+    sessionCallback: (conexion, tag, cb) => {
+      conexion.execute('ALTER SESSION DISABLE PARALLEL DML').then(() => cb(), cb);
+    },
     ...(carteraDir ? { configDir: carteraDir, walletLocation: carteraDir, walletPassword: carteraClave } : {})
   });
 }
@@ -75,6 +78,9 @@ function envolver(conexion) {
 
     // Bind de salida numérico (para RETURNING ... INTO y parámetros OUT)
     salidaNumero: { dir: oracledb.BIND_OUT, type: oracledb.NUMBER },
+
+    // Para leer columnas CLOB como texto (se usa en los respaldos: fetchInfo)
+    texto: oracledb.STRING,
 
     // Crea un bind para un tipo colección de Oracle (ej: T_LISTA_ITEMS)
     async listaDe(nombreTipo, filas) {

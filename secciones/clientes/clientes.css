@@ -1,0 +1,156 @@
+/* ==========================================================
+   ESTILOS: CLIENTES, AVISOS, COBRO Y VENTAS (tareas 31 a 34)
+   ========================================================== */
+
+/* ---------- Clientes ---------- */
+
+.cli-nuevo { margin: 12px 0; }
+
+.cli-fila {
+  width: 100%;
+  border: 0;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+.cli-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.cli-acciones .btn { height: 38px; padding: 0 14px; font-size: 12px; }
+
+.dir-fila { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+.dir-principal { display: flex; align-items: center; gap: 8px; margin: 4px 0 12px; font-size: 13px; }
+
+.sel-lista { max-height: 50vh; margin-top: 12px; overflow-y: auto; }
+
+
+/* ---------- Pedido con cliente registrado y despacho ---------- */
+
+.cliente-elegido {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: var(--verde-fondo);
+  color: var(--verde-texto);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.cliente-elegido button { border: 0; background: none; color: inherit; font: inherit; text-decoration: underline; cursor: pointer; }
+
+.pago-estado {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.pago-pagado { background: var(--verde-fondo); color: var(--verde-texto); }
+.pago-pendiente { background: var(--gris-agotado); color: var(--gris-texto); }
+
+.btn-cobrar {
+  width: 100%;
+  height: 40px;
+  margin-top: 10px;
+  border: 0;
+  border-radius: 12px;
+  background: var(--amarillo);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+
+/* ---------- Cobro ---------- */
+
+.cobro-total { margin: 4px 0 16px; font-size: 34px; font-weight: 800; }
+
+.cobro-opciones { display: grid; gap: 10px; }
+
+.cobro-opcion {
+  padding: 14px;
+  border: 2px solid var(--gris-borde);
+  border-radius: var(--radio-chico);
+  background: var(--blanco);
+}
+
+.cobro-opcion h3 { margin-bottom: 8px; font-size: 15px; }
+.cobro-vuelto { margin-top: 6px; font-size: 13px; font-weight: 600; }
+.cobro-espera { padding: 22px 0; text-align: center; color: var(--gris-texto); font-size: 14px; line-height: 1.5; }
+
+
+/* ---------- Avisos ---------- */
+
+.nav-boton {
+  border: 0;
+  background: none;
+  font: inherit;
+  cursor: pointer;
+}
+
+.aviso-estado { margin-bottom: 10px; color: var(--gris-texto); font-size: 12px; }
+
+.aviso-lista { display: flex; flex-direction: column; gap: 8px; max-height: 55vh; overflow-y: auto; }
+
+.aviso {
+  display: flex;
+  gap: 12px;
+  padding: 12px;
+  border-radius: var(--radio-chico);
+  background: var(--gris-fondo);
+}
+
+.aviso-alerta { background: var(--rojo-fondo); }
+.aviso-aviso { background: var(--amarillo-claro); }
+.aviso-exito { background: var(--verde-fondo); }
+
+.aviso-icono { font-size: 20px; }
+.aviso strong { font-size: 14px; }
+.aviso p { margin-top: 2px; font-size: 13px; }
+.aviso small { display: block; margin-top: 4px; color: var(--gris-texto); font-size: 11px; }
+
+.ajuste-fila { display: flex; gap: 10px; }
+.ajuste-fila .btn { flex: 1; height: 44px; padding: 0 10px; font-size: 12px; }
+
+
+/* ---------- Panel de ventas ---------- */
+
+.ventas-rango { display: grid; grid-template-columns: 1fr 1fr auto; gap: 8px; margin-bottom: 14px; }
+.ventas-rango .campo { height: 44px; padding: 0 10px; font-size: 13px; }
+.ventas-rango .btn { height: 44px; padding: 0 16px; }
+
+.barras-dia {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 120px;
+  padding: 6px 0 0;
+}
+
+.barras-dia > div {
+  flex: 1;
+  min-width: 2px;
+  border-radius: 3px 3px 0 0;
+  background: var(--amarillo);
+}
+
+.barras-dia > div.vacio { background: var(--gris-agotado); }
+.barras-eje { display: flex; justify-content: space-between; margin-top: 4px; color: var(--gris-texto); font-size: 11px; }
+
+.ranking { display: flex; flex-direction: column; gap: 10px; }
+.ranking-fila small { display: flex; justify-content: space-between; gap: 8px; margin-bottom: 4px; font-size: 12px; }
+.ranking-fila strong { font-size: 13px; word-break: break-word; }
+.ranking-barra { height: 8px; border-radius: 4px; background: var(--gris-agotado); }
+.ranking-barra > span { display: block; height: 100%; border-radius: 4px; background: var(--amarillo-oscuro); }

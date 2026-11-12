@@ -12,11 +12,13 @@ import {
 } from '../../nucleo/estado.js';
 import { abrirModal, icono, esc, formatoPrecio, numeroPedido, haceCuanto, imagenProducto, mostrarToast } from '../../nucleo/utilidades.js';
 import { actualizarInsigniaPedidos } from '../../componentes/navegacion.js';
+import { abrirSelectorCliente } from '../clientes/clientes.js';
+import { abrirCobro } from '../../componentes/cobro.js';
 
 
 const plural = (n, uno, varios) => `${n} ${n === 1 ? uno : varios}`;
 
-const TIPOS_ENTREGA = ['Para llevar', 'Mesa 01', 'Mesa 02', 'Mesa 03', 'Mesa 04', 'Mesa 05'];
+const TIPOS_ENTREGA = ['Para llevar', 'Mesa 01', 'Mesa 02', 'Mesa 03', 'Mesa 04', 'Mesa 05', 'Despacho'];
 
 const CLASE_ESTADO = {
   'En preparación': 'estado-preparacion',
@@ -64,6 +66,11 @@ export function renderPedidos(contenedor) {
       </div>
       <p class="campo-error" id="error-cliente"></p>
 
+      ${puede('verClientes') ? (borrador.idCliente
+        ? `<div class="cliente-elegido"><span>✓ Cliente registrado</span><button type="button" id="quitar-cliente">Quitar</button></div>`
+        : `<button class="enlace-amarillo" id="elegir-cliente">${icono('usuario', 14)} Elegir cliente registrado</button>`) : ''}
+
+      ${borrador.tipo === 'Despacho' ? despachoHTML(borrador) : ''}
 
       ${borrador.items.length === 0
         ? '<p class="items-vacio">Aún no agregas productos a este pedido.</p>'
@@ -131,6 +138,15 @@ export function renderPedidos(contenedor) {
       renderPedidos(contenedor);
     });
   });
+
+  /* ----- Cobrar ----- */
+
+  contenedor.querySelectorAll('[data-cobrar]').forEach((boton) => {
+    boton.addEventListener('click', () => {
+      const pedido = estado.pedidos.find((p) => p.numero === Number(boton.dataset.cobrar));
+      if (pedido) abrirCobro(pedido, () => renderPedidos(contenedor));
+    });
+  });
 }
 
 
@@ -142,7 +158,38 @@ function enlazarFormulario(contenedor) {
   /* ----- Campos del borrador (se guardan sin volver a pintar) ----- */
 
   contenedor.querySelector('#cliente').addEventListener('input', (e) => { borrador.cliente = e.target.value; });
-  contenedor.querySelector('#tipo').addEventListener('change', (e) => { borrador.tipo = e.target.value; });
+
+  // Si cambia el nombre a mano, ya no es el cliente registrado que se había elegido
+  contenedor.querySelector('#cliente').addEventListener('change', () => {
+    if (!borrador.idCliente) return;
+    Object.assign(borrador, { idCliente: null, idDireccion: null, direcciones: [] });
+    renderPedidos(contenedor);
+  });
+
+  contenedor.querySelector('#tipo').addEventListener('change', (e) => { borrador.tipo = e.target.value; renderPedidos(contenedor); });
+
+  /* ----- Cliente registrado y dirección de despacho ----- */
+
+  const elegirCliente = contenedor.querySelector('#elegir-cliente');
+  if (elegirCliente) {
+    elegirCliente.addEventListener('click', () => abrirSelectorCliente((cliente) => {
+      const principal = cliente.direcciones.find((d) => d.esPrincipal) || cliente.direcciones[0];
+
+      Object.assign(borrador, { cliente: cliente.nombre, idCliente: cliente.id, direcciones: cliente.direcciones, idDireccion: principal ? principal.id : null });
+      renderPedidos(contenedor);
+    }));
+  }
+
+  const quitarCliente = contenedor.querySelector('#quitar-cliente');
+  if (quitarCliente) {
+    quitarCliente.addEventListener('click', () => {
+      Object.assign(borrador, { idCliente: null, idDireccion: null, direcciones: [] });
+      renderPedidos(contenedor);
+    });
+  }
+
+  const direccion = contenedor.querySelector('#direccion');
+  if (direccion) direccion.addEventListener('change', (e) => { borrador.idDireccion = Number(e.target.value) || null; });
   contenedor.querySelector('#nota').addEventListener('input', (e) => { borrador.nota = e.target.value; });
 
 
@@ -251,10 +298,41 @@ function pedidoHTML(pedido) {
 
       ${pedido.nota ? `<p class="pedido-nota">Nota: ${esc(pedido.nota)}</p>` : ''}
 
+      ${pagoHTML(pedido)}
+
       ${accion && puede(accion.permiso)
         ? `<button class="btn-avanzar" data-avanzar="${pedido.numero}">${accion.texto}</button>`
         : ''}
     </article>`;
+}
+
+
+// Dirección de despacho: se elige entre las del cliente registrado
+function despachoHTML(borrador) {
+  if (!borrador.idCliente) return '<p class="campo-error" style="display:block">Para un despacho elige un cliente registrado con dirección.</p>';
+  if (!borrador.direcciones.length) return '<p class="campo-error" style="display:block">Este cliente no tiene direcciones. Agrégala en Ajustes → Clientes.</p>';
+
+  const resumen = (d) => `${d.alias}: ${d.calle} ${d.numero}${d.depto ? `, depto ${d.depto}` : ''}, ${d.comuna}`;
+
+  return `
+    <label class="campo-blanco">
+      ${icono('flecha', 16)}
+      <select id="direccion" class="selector" aria-label="Dirección de despacho">
+        ${borrador.direcciones.map((d) => `<option value="${d.id}" ${d.id === borrador.idDireccion ? 'selected' : ''}>${esc(resumen(d))}</option>`).join('')}
+      </select>
+    </label>`;
+}
+
+// Estado de pago y botón para cobrar (solo para quien puede cobrar, y si las tablas de pagos existen)
+function pagoHTML(pedido) {
+  if (!puede('cobrar') || !estado.pagosDisponibles) return '';
+
+  const pago = estado.pagos[pedido.numero];
+  if (pago && pago.estado === 'AUTORIZADO') {
+    return `<p><span class="pago-estado pago-pagado">Pagado · ${pago.metodo === 'EFECTIVO' ? 'efectivo' : 'tarjeta'}</span></p>`;
+  }
+
+  return `<button class="btn-cobrar" data-cobrar="${pedido.numero}">Cobrar ${formatoPrecio(pedido.total)}</button>`;
 }
 
 

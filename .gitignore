@@ -11,3 +11,9 @@ cwallet.*
 backend/wallet/
 backend/instantclient_23_26/
 backend/wallet/
+
+# Sprint 4: logs y respaldos (contienen datos reales del local)
+logs/
+respaldos/
+backend/logs/
+backend/respaldos/

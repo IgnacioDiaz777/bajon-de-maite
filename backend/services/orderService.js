@@ -9,6 +9,7 @@
    ========================================================== */
 
 import { ErrorApp, primerValor } from './errores.js';
+import { direccionDeCliente } from './clienteService.js';
 
 
 // Recargo por convertir un plato en combo (papas + bebida). Se guarda
@@ -103,9 +104,24 @@ async function obtenerPedido(db, id) {
 
 /* ---------- Creación ---------- */
 
-export async function crearPedido(db, { nombreCliente, tipoEntrega, notaCocinero, productos }) {
-  const nombre = nombreCliente.trim();
+export async function crearPedido(db, { nombreCliente, idCliente, idDireccion, tipoEntrega, notaCocinero, productos }) {
+  let nombre = nombreCliente.trim();
   const nota = (notaCocinero || '').trim();
+
+  // 0. Cliente registrado (si viene): el nombre sale de la base de datos, no del navegador
+  if (idCliente) {
+    const { rows: clientes } = await db.ejecutar(`
+      /* cliente_por_id */
+      SELECT id_cliente, nombre FROM cliente WHERE id_cliente = :id AND activo = 1`, { id: idCliente });
+
+    if (!clientes.length) throw new ErrorApp(400, 'El cliente elegido no existe.');
+    nombre = clientes[0].NOMBRE;
+  }
+
+  // Despacho: la dirección debe ser de ese cliente. Se guarda su texto en el pedido: "[Despacho: Calle 123, Comuna]"
+  const destino = tipoEntrega === 'Despacho'
+    ? `Despacho: ${(await direccionDeCliente(db, idCliente, idDireccion)).slice(0, 80)}`
+    : tipoEntrega;
 
   // 1. Juntar líneas repetidas (mismo producto y mismo tipo)
   const lineas = new Map();
@@ -161,7 +177,7 @@ export async function crearPedido(db, { nombreCliente, tipoEntrega, notaCocinero
     PRECIO_UNITARIO: catalogo.get(l.idProducto).PRECIO + (l.combo ? RECARGO_COMBO : 0)
   }));
 
-  const observaciones = `[${tipoEntrega}]${nota ? ' ' + nota : ''}`;
+  const observaciones = `[${destino}]${nota ? ' ' + nota : ''}`.slice(0, 250);
 
   // 4. Registrar: cliente → SP_CREAR_PEDIDO → estado "en preparación"
   const idPedido = await db.sesion(async (s) => {
@@ -171,15 +187,15 @@ export async function crearPedido(db, { nombreCliente, tipoEntrega, notaCocinero
        WHERE LOWER(nombre) = LOWER(:nombre) AND activo = 1
        FETCH FIRST 1 ROWS ONLY`, { nombre });
 
-    let idCliente = buscado.rows[0] && buscado.rows[0].ID_CLIENTE;
+    let idClientePedido = idCliente || (buscado.rows[0] && buscado.rows[0].ID_CLIENTE);
 
-    if (!idCliente) {
+    if (!idClientePedido) {
       const nuevo = await s.ejecutar(`
         /* cliente_crear */
         INSERT INTO cliente (nombre) VALUES (:nombre)
         RETURNING id_cliente INTO :id`, { nombre, id: s.salidaNumero });
 
-      idCliente = primerValor(nuevo.outBinds.id);
+      idClientePedido = primerValor(nuevo.outBinds.id);
       await s.commit(); // el procedimiento hace su propio COMMIT / ROLLBACK
     }
 
@@ -191,7 +207,7 @@ export async function crearPedido(db, { nombreCliente, tipoEntrega, notaCocinero
         BEGIN
           sp_crear_pedido(:id_cliente, :observacion, :items, :id_pedido);
         END;`,
-        { id_cliente: idCliente, observacion: observaciones, items: lista, id_pedido: s.salidaNumero });
+        { id_cliente: idClientePedido, observacion: observaciones, items: lista, id_pedido: s.salidaNumero });
 
       const id = primerValor(resultado.outBinds.id_pedido);
 

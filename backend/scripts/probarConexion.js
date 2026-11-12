@@ -28,6 +28,16 @@ try {
     }
   }
 
+  // Tablas nuevas (se crean con npm run crear-tablas): si faltan solo se avisa, la app base funciona sin ellas
+  for (const tabla of ['AUDITORIA', 'FEEDBACK', 'CLIENTE_PERFIL', 'DIRECCION_DESPACHO', 'PAGO']) {
+    try {
+      const r = await db.ejecutar(`SELECT COUNT(*) AS n FROM ${tabla}`); // nombres fijos de la lista de arriba
+      console.log(`  OK    ${tabla.padEnd(15)} ${r.rows[0].N} registros`);
+    } catch {
+      console.log(`  FALTA ${tabla.padEnd(15)} (ejecuta: npm run crear-tablas)`);
+    }
+  }
+
   const sp = await db.ejecutar(`SELECT object_name FROM all_objects WHERE object_name = 'SP_CREAR_PEDIDO' AND object_type = 'PROCEDURE'`);
   console.log(sp.rows.length ? '  OK    SP_CREAR_PEDIDO' : '  FALLA SP_CREAR_PEDIDO (no visible desde este usuario)');
 

@@ -16,6 +16,9 @@ export function fijarToken(nuevoToken) {
   token = nuevoToken;
 }
 
+// Para las conexiones que no pasan por api() (como el flujo de notificaciones en tiempo real)
+export const tokenActual = () => token;
+
 export function cuandoExpireLaSesion(callback) {
   alSesionExpirada = callback;
 }
